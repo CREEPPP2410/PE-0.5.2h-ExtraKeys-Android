@@ -3784,10 +3784,10 @@ class PlayState extends MusicBeatState
 
 	private function hitboxDataKeyIsPressed(data:Int):Bool
 	{
-		for (i in 0..._hitbox.array[data].length) {
-			if (_hitbox.array[i].pressed) return true;
-		}
-
+		if (_hitbox.array[data].pressed) 
+                {
+                        return true;
+                }
 		return false;
 	}
         #end
