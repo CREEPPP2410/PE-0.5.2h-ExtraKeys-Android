@@ -1064,6 +1064,13 @@ class PlayState extends MusicBeatState
 		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 
+		if(!ClientPrefs.keyboardMode)
+		{
+                        #if android
+			addHitbox(mania);
+                        #end
+		}
+
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
 		// UI_camera.zoom = 1;
@@ -1518,6 +1525,12 @@ class PlayState extends MusicBeatState
 		inCutscene = false;
 		var ret:Dynamic = callOnLuas('onStartCountdown', []);
 		if(ret != FunkinLua.Function_Stop) {
+		        if(!ClientPrefs.keyboardMode)
+		        {
+                                #if android
+			        _hitbox.visible = true;
+                                #end
+		        }
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
 
 			generateStaticArrows(0);
@@ -2071,6 +2084,15 @@ class PlayState extends MusicBeatState
 		
 		mania = newValue;
 
+		if(!ClientPrefs.keyboardMode)
+		{
+                        #if android
+                        remove(_hitbox);
+			addHitbox(mania);
+                        _hitbox.visible = true;
+                        #end
+		}
+
 		playerStrums.clear();
 		opponentStrums.clear();
 		strumLineNotes.clear();
@@ -2370,7 +2392,7 @@ class PlayState extends MusicBeatState
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180);
 		}
 
-		if (controls.PAUSE && startedCountdown && canPause)
+		if (controls.PAUSE #if android || FlxG.android.justReleased.BACK #end && startedCountdown && canPause)
 		{
 			var ret:Dynamic = callOnLuas('onPause', []);
 			if(ret != FunkinLua.Function_Stop) {
@@ -3224,6 +3246,12 @@ class PlayState extends MusicBeatState
 			}
 		}
 		
+		if(!ClientPrefs.keyboardMode)
+		{
+                        #if android
+			_hitbox.visible = false;
+                        #end
+		}
 		timeBarBG.visible = false;
 		timeBar.visible = false;
 		timeTxt.visible = false;
@@ -3746,6 +3774,18 @@ class PlayState extends MusicBeatState
 
 	private function keyShit():Void
 	{
+	        if(!ClientPrefs.keyboardMode)
+		{
+		        #if android
+		        for (i in 0..._hitbox.array.length) {
+			        if (_hitbox.array[i].justPressed)
+			        {
+				       onKeyPress(new KeyboardEvent(KeyboardEvent.KEY_DOWN, true, true, -1, keysArray[mania][i][0]));
+			        }
+		        }
+		        #end
+		}
+
 		// FlxG.watch.addQuick('asdfa', upP);
 		if (!boyfriend.stunned && generatedMusic)
 		{
@@ -3773,6 +3813,18 @@ class PlayState extends MusicBeatState
 				boyfriend.dance();
 				//boyfriend.animation.curAnim.finish();
 			}
+		}
+
+	        if(!ClientPrefs.keyboardMode)
+		{
+		        #if android
+		        for (i in 0..._hitbox.array.length) {
+			        if (_hitbox.array[i].justReleased)
+			        {
+				       onKeyRelease(new KeyboardEvent(KeyboardEvent.KEY_UP, true, true, -1, keysArray[mania][i][0]));
+			        }
+		        }
+		        #end
 		}
 	}
 
