@@ -13,7 +13,7 @@ class FlxHitbox extends FlxSpriteGroup
     public var hitbox:FlxSpriteGroup;
     public var frameshb:FlxAtlasFrames;
 
-    public var array:Array<Array<FlxButton>> = [];
+    public var array:Array<FlxButton> = [];
 
     public var k1:FlxButton;
     public var k2:FlxButton;
