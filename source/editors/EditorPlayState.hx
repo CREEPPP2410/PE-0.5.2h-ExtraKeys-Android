@@ -153,8 +153,18 @@ class EditorPlayState extends MusicBeatState
 		FlxG.mouse.visible = false;
 
 		//sayGo();
-		FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
-		FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
+		if(!ClientPrefs.keyboardMode)
+		{
+                        #if android
+			addHitbox(mania);
+                        _hitbox.visible = true;
+                        #end
+		}
+                else if(ClientPrefs.keyboardMode)
+		{
+			FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
+			FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
+		}
 
 		super.create();
 	}
@@ -313,7 +323,7 @@ class EditorPlayState extends MusicBeatState
 	}
 
 	override function update(elapsed:Float) {
-		if (FlxG.keys.justPressed.ESCAPE)
+		if (FlxG.keys.justPressed.ESCAPE #if android || FlxG.android.justReleased.BACK #end)
 		{
 			FlxG.sound.music.pause();
 			vocals.pause();
@@ -538,7 +548,7 @@ class EditorPlayState extends MusicBeatState
 		var key:Int = getKeyFromEvent(eventKey);
 		//trace('Pressed: ' + eventKey);
 
-		if (key > -1 && FlxG.keys.checkStatus(eventKey, JUST_PRESSED))
+		if (key > -1 && (FlxG.keys.checkStatus(eventKey, JUST_PRESSED) || !ClientPrefs.keyboardMode))
 		{
 			if(generatedMusic)
 			{
@@ -663,6 +673,18 @@ class EditorPlayState extends MusicBeatState
 
 	private function keyShit():Void
 	{
+	        if(!ClientPrefs.keyboardMode)
+		{
+		        #if android
+		        for (i in 0..._hitbox.array.length) {
+			        if (_hitbox.array[i].justPressed)
+			        {
+				       onKeyPress(new KeyboardEvent(KeyboardEvent.KEY_DOWN, true, true, -1, keysArray[mania][i][0]));
+			        }
+		        }
+		        #end
+		}
+
 		// FlxG.watch.addQuick('asdfa', upP);
 		if (generatedMusic)
 		{
@@ -677,6 +699,18 @@ class EditorPlayState extends MusicBeatState
 				}
 			});
 
+		}
+
+	        if(!ClientPrefs.keyboardMode)
+		{
+		        #if android
+		        for (i in 0..._hitbox.array.length) {
+			        if (_hitbox.array[i].justReleased)
+			        {
+				       onKeyRelease(new KeyboardEvent(KeyboardEvent.KEY_UP, true, true, -1, keysArray[mania][i][0]));
+			        }
+		        }
+		        #end
 		}
 	}
 
