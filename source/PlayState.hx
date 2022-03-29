@@ -3775,10 +3775,8 @@ class PlayState extends MusicBeatState
         #if android
 	private function hitboxKeysArePressed():Bool
 	{
-		for (i in 0..._hitbox.array[mania].length) {
-			for (j in 0..._hitbox.array[mania][i].length) {
-				if (_hitbox.array[mania][i][j].pressed) return true;
-			}
+		for (i in 0..._hitbox.array.length) {
+			if (_hitbox.array[i].pressed) return true;
 		}
 
 		return false;
@@ -3786,8 +3784,8 @@ class PlayState extends MusicBeatState
 
 	private function hitboxDataKeyIsPressed(data:Int):Bool
 	{
-		for (i in 0..._hitbox.array[mania][data].length) {
-			if (_hitbox.array[mania][data][i].pressed) return true;
+		for (i in 0..._hitbox.array[data].length) {
+			if (_hitbox.array[i].pressed) return true;
 		}
 
 		return false;
