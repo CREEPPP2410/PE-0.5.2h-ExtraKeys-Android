@@ -3772,33 +3772,27 @@ class PlayState extends MusicBeatState
 		return false;
 	}
 
+        #if android
 	private function hitboxKeysArePressed():Bool
 	{
-	        if(!ClientPrefs.keyboardMode)
-		{
-                        #if android
-	                if (_hitbox.array[mania].pressed) 
-                        {
-                                return true;
-                        }
-                        #end
-                }
-	        return false;
+		for (i in 0..._hitbox.array[mania].length) {
+			for (j in 0..._hitbox.array[mania][i].length) {
+				if (_hitbox.array[mania][i][j].pressed) return true;
+			}
+		}
+
+		return false;
 	}
 
 	private function hitboxDataKeyIsPressed(data:Int):Bool
 	{
-	        if(!ClientPrefs.keyboardMode)
-		{
-                        #if android
-			if (_hitbox.array[mania].pressed && _hitbox.array[data].pressed)
-                        {
-                                return true;
-                        }
-                        #end
-                }
-	        return false;
+		for (i in 0..._hitbox.array[mania][data].length) {
+			if (_hitbox.array[mania][data][i].pressed) return true;
+		}
+
+		return false;
 	}
+        #end
 
 	private function keyShit():Void
 	{
@@ -3822,12 +3816,14 @@ class PlayState extends MusicBeatState
 			{
 	                        if(!ClientPrefs.keyboardMode)
 		                {
+                                        #if android
 				        // hold note functions
 				        if (daNote.isSustainNote && hitboxDataKeyIsPressed(daNote.noteData)
 				        && daNote.canBeHit && daNote.mustPress && !daNote.tooLate 
 				        && !daNote.wasGoodHit) {
 					       goodNoteHit(daNote);
 				        }
+                                        #end
                                 }
                                 else
                                 {
@@ -3842,6 +3838,7 @@ class PlayState extends MusicBeatState
 
 	                if(!ClientPrefs.keyboardMode)
 		        {
+                                #if android
 			        if (hitboxKeysArePressed() && !endingSong) {
 				        #if ACHIEVEMENTS_ALLOWED
 				        var achieve:String = checkForAchievement(['oversinging']);
@@ -3855,6 +3852,7 @@ class PlayState extends MusicBeatState
 				        boyfriend.dance();
 				        //boyfriend.animation.curAnim.finish();
 			        }
+                                #end
                         }
                         else
                         {
