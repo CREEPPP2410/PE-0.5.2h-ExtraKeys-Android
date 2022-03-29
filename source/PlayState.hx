@@ -3792,12 +3792,24 @@ class PlayState extends MusicBeatState
 			// rewritten inputs???
 			notes.forEachAlive(function(daNote:Note)
 			{
-				// hold note functions
-				if (daNote.isSustainNote && dataKeyIsPressed(daNote.noteData)
-				&& daNote.canBeHit && daNote.mustPress && !daNote.tooLate 
-				&& !daNote.wasGoodHit) {
-					goodNoteHit(daNote);
-				}
+	                        if(!ClientPrefs.keyboardMode)
+		                {
+				        // hold note functions
+				        if (daNote.isSustainNote && #if android _hitbox.array[daNote.noteData].pressed || #end dataKeyIsPressed(daNote.noteData)
+				        && daNote.canBeHit && daNote.mustPress && !daNote.tooLate 
+				        && !daNote.wasGoodHit) {
+					       goodNoteHit(daNote);
+				        }
+                                }
+                                else
+                                {
+				        // hold note functions
+				        if (daNote.isSustainNote && dataKeyIsPressed(daNote.noteData)
+				        && daNote.canBeHit && daNote.mustPress && !daNote.tooLate 
+				        && !daNote.wasGoodHit) {
+					       goodNoteHit(daNote);
+				        }
+                                }
 			});
 
 			if (keysArePressed() && !endingSong) {
