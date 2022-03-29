@@ -3777,11 +3777,10 @@ class PlayState extends MusicBeatState
 	        if(!ClientPrefs.keyboardMode)
 		{
                         #if android
-		        for (i in 0..._hitbox.array[mania].length) {
-			        for (j in 0..._hitbox.array[mania][i].length) {
-				        if (_hitbox.array[mania][i][j].pressed) return true;
-			        }
-		        }
+	                if (_hitbox.array[mania].pressed) 
+                        {
+                                return true;
+                        }
 		        return false;
                         #end
                 }
@@ -3792,10 +3791,10 @@ class PlayState extends MusicBeatState
 	        if(!ClientPrefs.keyboardMode)
 		{
                         #if android
-		        for (i in 0..._hitbox.array[mania][data].length) {
-			        if (_hitbox.array[mania][data][i].pressed) return true;
-		        }
-
+			if (_hitbox.array[mania].pressed && _hitbox.array[data].pressed)
+                        {
+                                return true;
+                        }
 		        return false;
                         #end
                 }
