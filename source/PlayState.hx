@@ -3772,6 +3772,35 @@ class PlayState extends MusicBeatState
 		return false;
 	}
 
+	private function hitboxKeysArePressed():Bool
+	{
+	        if(!ClientPrefs.keyboardMode)
+		{
+                        #if android
+		        for (i in 0..._hitbox.array[mania].length) {
+			        for (j in 0..._hitbox.array[mania][i].length) {
+				        if (_hitbox.array[mania][i][j].pressed) return true;
+			        }
+		        }
+		        return false;
+                        #end
+                }
+	}
+
+	private function hitboxDataKeyIsPressed(data:Int):Bool
+	{
+	        if(!ClientPrefs.keyboardMode)
+		{
+                        #if android
+		        for (i in 0..._hitbox.array[mania][data].length) {
+			        if (_hitbox.array[mania][data][i].pressed) return true;
+		        }
+
+		        return false;
+                        #end
+                }
+	}
+
 	private function keyShit():Void
 	{
 	        if(!ClientPrefs.keyboardMode)
@@ -3795,7 +3824,7 @@ class PlayState extends MusicBeatState
 	                        if(!ClientPrefs.keyboardMode)
 		                {
 				        // hold note functions
-				        if (daNote.isSustainNote && #if android _hitbox.array[daNote.noteData].pressed || #end dataKeyIsPressed(daNote.noteData)
+				        if (daNote.isSustainNote && hitboxDataKeyIsPressed(daNote.noteData)
 				        && daNote.canBeHit && daNote.mustPress && !daNote.tooLate 
 				        && !daNote.wasGoodHit) {
 					       goodNoteHit(daNote);
@@ -3812,19 +3841,38 @@ class PlayState extends MusicBeatState
                                 }
 			});
 
-			if (keysArePressed() && !endingSong) {
-				#if ACHIEVEMENTS_ALLOWED
-				var achieve:String = checkForAchievement(['oversinging']);
-				if (achieve != null) {
-					startAchievement(achieve);
-				}
-				#end
-			}
-			else if (boyfriend.holdTimer > Conductor.stepCrochet * 0.001 * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
-			{
-				boyfriend.dance();
-				//boyfriend.animation.curAnim.finish();
-			}
+	                if(!ClientPrefs.keyboardMode)
+		        {
+			        if (hitboxKeysArePressed() && !endingSong) {
+				        #if ACHIEVEMENTS_ALLOWED
+				        var achieve:String = checkForAchievement(['oversinging']);
+				        if (achieve != null) {
+					       startAchievement(achieve);
+				        }
+				        #end
+			        }
+			        else if (boyfriend.holdTimer > Conductor.stepCrochet * 0.001 * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
+			        {
+				        boyfriend.dance();
+				        //boyfriend.animation.curAnim.finish();
+			        }
+                        }
+                        else
+                        {
+			        if (keysArePressed() && !endingSong) {
+				        #if ACHIEVEMENTS_ALLOWED
+				        var achieve:String = checkForAchievement(['oversinging']);
+				        if (achieve != null) {
+					       startAchievement(achieve);
+				        }
+				        #end
+			        }
+			        else if (boyfriend.holdTimer > Conductor.stepCrochet * 0.001 * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
+			        {
+				        boyfriend.dance();
+				        //boyfriend.animation.curAnim.finish();
+			        }
+                        }
 		}
 
 	        if(!ClientPrefs.keyboardMode)
