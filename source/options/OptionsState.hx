@@ -86,6 +86,11 @@ class OptionsState extends MusicBeatState
 		changeSelection();
 		ClientPrefs.saveSettings();
 
+                #if android
+	        addVirtualPad(UP_DOWN, A_B);
+                addPadCamera();
+                #end
+
 		super.create();
 	}
 
