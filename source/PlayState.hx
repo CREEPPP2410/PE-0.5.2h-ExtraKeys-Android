@@ -3781,9 +3781,9 @@ class PlayState extends MusicBeatState
                         {
                                 return true;
                         }
-		        return false;
                         #end
                 }
+	        return false;
 	}
 
 	private function hitboxDataKeyIsPressed(data:Int):Bool
@@ -3795,9 +3795,9 @@ class PlayState extends MusicBeatState
                         {
                                 return true;
                         }
-		        return false;
                         #end
                 }
+	        return false;
 	}
 
 	private function keyShit():Void
