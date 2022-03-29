@@ -80,7 +80,7 @@ class FlxHitbox extends FlxSpriteGroup
                 frameshb = Paths.getSparrowAtlas('androidcontrols/hitbox/4k');
 
                 hitbox.add(add(k1 = createhitbox(0, "k1")));
-                hitbox.add(add(k2 = createhitbox(320, "k2)));
+                hitbox.add(add(k2 = createhitbox(320, "k2")));
                 hitbox.add(add(k3 = createhitbox(740, "k3")));
                 hitbox.add(add(k4 = createhitbox(960, "k4")));
             }
