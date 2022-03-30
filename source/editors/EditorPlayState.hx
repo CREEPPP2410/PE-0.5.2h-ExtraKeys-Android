@@ -674,7 +674,7 @@ class EditorPlayState extends MusicBeatState
         #if android
 	private function hitboxKeysArePressed():Bool
 	{
-	        if (_hitbox.array[mania].pressed) 
+	        if (_hitbox.array[songMania].pressed) 
                 {
 			return true;
 		}
