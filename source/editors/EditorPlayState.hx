@@ -671,6 +671,26 @@ class EditorPlayState extends MusicBeatState
 		return false;
 	}
 
+        #if android
+	private function hitboxKeysArePressed():Bool
+	{
+	        if (_hitbox.array[mania].pressed) 
+                {
+			return true;
+		}
+		return false;
+	}
+
+	private function hitboxDataKeyIsPressed(data:Int):Bool
+	{
+		if (_hitbox.array[data].pressed) 
+                {
+                        return true;
+                }
+		return false;
+	}
+        #end
+
 	private function keyShit():Void
 	{
 	        if(!ClientPrefs.keyboardMode)
@@ -691,14 +711,27 @@ class EditorPlayState extends MusicBeatState
 			// rewritten inputs???
 			notes.forEachAlive(function(daNote:Note)
 			{
-				// hold note functions
-				if (daNote.isSustainNote && dataKeyIsPressed(daNote.noteData)
-				&& daNote.canBeHit && daNote.mustPress && !daNote.tooLate 
-				&& !daNote.wasGoodHit) {
-					goodNoteHit(daNote);
-				}
+	                        if(!ClientPrefs.keyboardMode)
+		                {
+                                        #if android
+				        // hold note functions
+				        if (daNote.isSustainNote && hitboxDataKeyIsPressed(daNote.noteData)
+				        && daNote.canBeHit && daNote.mustPress && !daNote.tooLate 
+				        && !daNote.wasGoodHit) {
+					       goodNoteHit(daNote);
+				        }
+                                        #end
+                                }
+                                else
+                                {
+				        // hold note functions
+				        if (daNote.isSustainNote && dataKeyIsPressed(daNote.noteData)
+				        && daNote.canBeHit && daNote.mustPress && !daNote.tooLate 
+				        && !daNote.wasGoodHit) {
+					       goodNoteHit(daNote);
+				        }
+                                }
 			});
-
 		}
 
 	        if(!ClientPrefs.keyboardMode)
