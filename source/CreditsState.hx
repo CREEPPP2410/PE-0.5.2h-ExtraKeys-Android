@@ -83,7 +83,7 @@ class CreditsState extends MusicBeatState
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
 		        ['Android Port'],
 		        ['Saw (M.A. Jigsaw)','saw','Main Coder','https://www.youtube.com/channel/UC2Sk7vtPzOvbVzdVTWrribQ', 'F73838'],
-		        ['Awa','awa','Hitboxes Maker','', '53E52C'],
+		        ['Awa','awa','Hitboxes Maker','https://youtube.com/channel/UCgZmfFDuoTTCr32oNAY65LQ', '53E52C'],
 		        [''],
 			['Psych Engine Extra Keys'],
 			['tposejank', 			'unknown',			'Main programmer of ~~the keys~~', 						'https://twitter.com/tpose_jank', 		'000000'],
