@@ -154,12 +154,12 @@ class FlxHitbox extends FlxSpriteGroup
                 hitbox.add(add(k3 = createhitbox(232, "k3")));
                 hitbox.add(add(k4 = createhitbox(348, "k4")));    
                 hitbox.add(add(k5 = createhitbox(464, "k5")));
-                hitbox.add(add(k6 = createhitbox(581, "k6"))); 
-                hitbox.add(add(k7 = createhitbox(699, "k7")));
-                hitbox.add(add(k8 = createhitbox(816, "k8"))); 
-                hitbox.add(add(k9 = createhitbox(932, "k9")));
-                hitbox.add(add(k10 = createhitbox(1048, "k10"))); 
-                hitbox.add(add(k11 = createhitbox(1164, "k11"))); 
+                hitbox.add(add(k6 = createhitbox(580, "k6"))); 
+                hitbox.add(add(k7 = createhitbox(696, "k7")));
+                hitbox.add(add(k8 = createhitbox(812, "k8"))); 
+                hitbox.add(add(k9 = createhitbox(928, "k9")));
+                hitbox.add(add(k10 = createhitbox(1044, "k10"))); 
+                hitbox.add(add(k11 = createhitbox(1160, "k11"))); 
         }
 
         array = [k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11];
